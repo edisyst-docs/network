@@ -42,8 +42,11 @@ docker exec -it terraform bash
 terraform init  # inizializza il progetto Terraform
 terraform plan  # esegue il piano di esecuzione
 terraform apply # applica la config
+terraform apply -var "instance_name=MiaIstanzaCustom" # posso sovrascrivere i default delle variabili dichiarate
 
-terraform state   # legge il terraform.tfstate che è condiviso/versionato e và tutelato dai conflitti di chi lo edita
+terraform state   # legge il terraform.tfstate generato che è versionato x tutelarlo dai conflitti di chi lo edita
+terraform output  # legge il output.tf dove gli dico quali dati restituirmi in output
+
 terraform destroy # distrugge l'elemento creato
 ```
 
