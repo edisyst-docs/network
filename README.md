@@ -3,6 +3,9 @@
 # Network
 ```bash
 ifconfig - (ipconfig) - # eth0 è la mia connessione fisica a internet 
+ifconfig eth0 192.168.1.10 netmask 255.255.255.0 # imposto il mio IP e netmask sulla mia eth0
+ifconfig eth0 down / up # per buttare giù o ritirare su l'interfaccia eth0
+
 ip address - ip -4 address # ho solo gli IPv4 
 ipconfig /all        # mostra tutte le interfacce, anche quelle spente
 ifconfig /displaydns # mostra la cache dei DNS memorizzata attualmente sul sistema
@@ -26,6 +29,8 @@ curl -X POST --data "q=cane&par2=val2" https://www.google.com/search # posso pas
 sudo ufw allow 80
 sudo ufw status
 sudo ufw enable
+
+service start / stop docker # avvia/stoppa il servizio docker (per esempio)
 ```
 
 # SSH
@@ -53,13 +58,13 @@ resolvectl status # IP pubblico
 wmic memphysical get memorydevices # quanti slot RAM sono utilizzati. 
 # Su Gestinoe attività > Prestazioni > Memoria c'è la stessa info
 
-arp -a # stampa la relazione IP-Mac Addr di ogni interfaccia di rete. Opera a livello di MAC ADDRESS (liv.2)
-route print # visualizzo la tabella di instradamento completa 
-
-ping 8.8.8.8 # Opera a livello di IP ADDRESS (liv.3)
-ping google.it
+ping 8.8.8.8       # Opera a livello di IP ADDRESS (liv.3)
+ping google.it     # Verifica se un host è attivo
 pathping google.it # misura la latenza dal mio router per esempio
 
+route  # visualizza la tabella di instradamento del mio host
+arp -a # stampa la relazione IP-MAC_ADDRESS di ogni scheda di rete. Opera a livello di MAC ADDRESS (liv.2)
+ 
 tracert google.it # mostra a video tutti i salti del pacchetto per arrivare all'host remoto
 
 net user # elenco utenti
@@ -81,17 +86,22 @@ systeminfo # info su tutto: CPU, SO, Bios, RAM, schede di rete
 
 ```bash
 doskey/history # uguale a history in Linux
-nslookup # mi dice il mio DNS
-traceroute www.google.com
+traceroute www.google.com # traccia il percorso che fa un pacchetto x giungere alla destinazione
+dig www.google.com      # interrroga i server DNS, mi dà il tempo di attesa x giungere alla destinazione
+nslookup www.google.com # interrroga i server DNS, mi dà info sulla destinazione
 ```
 
 ```bash
-netstat # stato porte TCP e UDP. Eseguire da Amministratore
+netstat        # stato di tutte le porte TCP e UDP.
+netstat -r     # stato di tutte le interfacce di rete attive
 netstat -tulpn # esistono tante opzioni, son da provare
-netstat -b 5 # in 127.0.0.1:64038 c'è il PID=64038 per identificarlo se voglio killarlo
+netstat -b 5   # in 127.0.0.1:64038 c'è il PID=64038 per identificarlo se voglio killarlo
 ss -tulpn
 ```
 
+```bash
+ifup / ifdown eth0 # abilita/disabilita la scheda di rete
+```
 
 ## Powershell
 ```bash
