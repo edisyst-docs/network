@@ -30,7 +30,7 @@ sudo ufw allow 80
 sudo ufw status
 sudo ufw enable
 
-service start / stop docker # avvia/stoppa il servizio docker (per esempio)
+service start/stop/status docker # avvia/stoppa il servizio docker (per esempio)
 ```
 
 # SSH
@@ -45,7 +45,7 @@ ssh username@ip_macchina # di default port=22, sarebbe meglio cambiarla per la s
 ```
 
 ```bash
-cat /etc/resolv.conf
+cat /etc/resolv.conf # elenco dei nameserver
 
 netsh # mi dice tutte le opzioni che ha
 netsh wlan show profiles # mostra chi è connesso al Wifi
