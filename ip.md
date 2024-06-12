@@ -1,3 +1,35 @@
+# TRASMISSIONE VIA SSH
+
+### ELENCO FILE
+```bash
+authorized_keys # contiene tutte le chiavi pubbliche del mio client (tutti gli host a cui può accedere)
+id_rsa # la mia chiave privata
+id_rsa.pub # la mia chiave pubblica che posso passare a chiunque per fare io da host a lui
+known_hosts
+```
+
+### INSERIMENTO MANUALE CHIAVI
+```bash
+scp .ssh/id_rsa.pub utente@host: # secure copy, copio manualmente la pubkey sull'host. I : finali indicano che andrò nella home folder
+Nell'host dovrò fare:
+mkdir .ssh
+chmod 700 .ssh/
+cat id_rssa.pub >> .ssh/authorized_keys # qui copio tutte le pubkey che verranno usate
+rm /id_rssa.pub
+chmod 600 .ssh/authorized_keys
+cat .ssh/authorized_keys
+exit
+Dal client se cerco di entrae in ssh mi chiede la password della chiave, non quella dell'host remoto
+```
+
+### INSERIMENTO AUTOMATICO CHIAVI
+```bash
+Dalla macchina host faccio:
+ssh-keygen -t rsa # crea .ssh/is_rsa e .ssh/is_rsa.pub
+ssh-copy-id -i ~/.ssh/id_rsa.pub root@192.168.10.20
+```
+
+
 # Esercizio IP - Simulazione ping - WSL Linux
 Per simulare la comunicazione tra due o più host con differente IP su un sistema operativo Ubuntu senza usare macchine virtuali, 
 puoi utilizzare dei namespace di rete (network namespaces). 

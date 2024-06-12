@@ -1,5 +1,3 @@
-
-
 # Network
 ```bash
 ifconfig - (ipconfig) - # eth0 è la mia connessione fisica a internet 
