@@ -51,42 +51,10 @@ netsh wlan show profiles # mostra chi è connesso al Wifi
 resolvectl status # IP pubblico
 ```
 
-## Windows CMD
 ```bash
-wmic memphysical get memorydevices # quanti slot RAM sono utilizzati. 
-# Su Gestinoe attività > Prestazioni > Memoria c'è la stessa info
-
-ping 8.8.8.8       # Opera a livello di IP ADDRESS (liv.3)
-ping google.it     # Verifica se un host è attivo
-pathping google.it # misura la latenza dal mio router per esempio
-
-route  # visualizza la tabella di instradamento del mio host
-arp -a # stampa la relazione IP-MAC_ADDRESS di ogni scheda di rete. Opera a livello di MAC ADDRESS (liv.2)
- 
-tracert google.it # mostra a video tutti i salti del pacchetto per arrivare all'host remoto
-
-net user # elenco utenti
-net user Edoardo # dettagli utente
-
-net session # elenco dei servizi
-net stop # per fermare un servizio
-```
-
-```bash
-tasklist # elenco processi attivi su Windows
-taskkill /PID 19196 # killa il processo 19196
-driverquery # elenco driver del PC indicato (default: il mio)
-powercfg /q # info alimentazione e risparmio energetico
-cacls # partizioni NTFS
-getmac # MAC address
-systeminfo # info su tutto: CPU, SO, Bios, RAM, schede di rete
-```
-
-```bash
-doskey/history # uguale a history in Linux
 traceroute www.google.com # traccia il percorso che fa un pacchetto x giungere alla destinazione
-dig www.google.com      # interrroga i server DNS, mi dà il tempo di attesa x giungere alla destinazione
-nslookup www.google.com # interrroga i server DNS, mi dà info sulla destinazione
+dig www.google.com        # interroga i server DNS, mi dà il tempo di attesa x giungere alla destinazione
+nslookup www.google.com   # interroga i server DNS, mi dà info sulla destinazione
 ```
 
 ```bash
@@ -101,10 +69,6 @@ ss -tulpn
 ifup / ifdown eth0 # abilita/disabilita la scheda di rete
 ```
 
-## Powershell
-```bash
-clip < network.md # copia negli appunti di Windows il contenuto di quel file
-```
 
 
 ## GPG - Crittografia asimmetrica 

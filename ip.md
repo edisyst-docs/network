@@ -11,7 +11,10 @@ known_hosts
 ### INSERIMENTO MANUALE CHIAVI
 ```bash
 scp .ssh/id_rsa.pub utente@host: # secure copy, copio manualmente la pubkey sull'host. I : finali indicano che andrò nella home folder
+```
+
 Nell'host dovrò fare:
+```bash
 mkdir .ssh
 chmod 700 .ssh/
 cat id_rssa.pub >> .ssh/authorized_keys # qui copio tutte le pubkey che verranno usate
@@ -19,12 +22,12 @@ rm /id_rssa.pub
 chmod 600 .ssh/authorized_keys
 cat .ssh/authorized_keys
 exit
-Dal client se cerco di entrae in ssh mi chiede la password della chiave, non quella dell'host remoto
 ```
+Dal client se cerco di entrae in ssh mi chiede la password della chiave, non quella dell'host remoto
 
 ### INSERIMENTO AUTOMATICO CHIAVI
-```bash
 Dalla macchina host faccio:
+```bash
 ssh-keygen -t rsa # crea .ssh/is_rsa e .ssh/is_rsa.pub
 ssh-copy-id -i ~/.ssh/id_rsa.pub root@192.168.10.20
 ```
