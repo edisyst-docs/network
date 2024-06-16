@@ -1,4 +1,12 @@
 # Network
+La scrittura `192.168.1.10/24` equivale a dire: `IP=192.168.1.10` e `netmask=255.255.255.0` ossia:
+- i primi 24 bit identificano la rete: da `192.168.0.0` a `192.168.255.0`
+- gli ultimi 8 bit identificano l'host
+
+La scrittura `192.168.1.10/23` equivale a dire: `IP=192.168.1.10` e `netmask=255.255.254.0` ossia:
+- i primi 23 bit identificano la rete: da `192.168.0.0` a `192.168.127.0` 
+- gli ultimi 9 bit identificano l'host
+
 ```bash
 ifconfig - (ipconfig) - # eth0 è la mia connessione fisica a internet 
 ifconfig eth0 192.168.1.10 netmask 255.255.255.0 # imposto il mio IP e netmask sulla mia eth0
@@ -12,6 +20,8 @@ ifconfig /flushdns   # cancella la cache dei DNS, da fare per prevenire attacchi
 ipconfig | grep "Indirizzo IPv4"
 ipconfig | grep IPv4 # in questo caso fa lo stesso
 ifconfig | grep eth0
+
+nmap 192.168.1.0/24 # scanzione e mappatura rete
 ```
 
 ```bash
