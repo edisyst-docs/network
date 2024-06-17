@@ -1,3 +1,12 @@
+# Utenti
+```bash
+adduser nicola # crea utente nuovo: mi chiederà la sua password più altre info opzionali
+# Esiste anche "useradd" ma è più comodo "adduser" 
+adduser --home /home/utente_custom luca  # modifica la home di default di luca (sarebbe stata /home/luca)
+adduser --ingroup amministratori edoardo # crea edoardo già inserito in un gruppo
+```
+
+
 # Network
 La scrittura `192.168.1.10/24` equivale a dire: `IP=192.168.1.10` e `netmask=255.255.255.0` ossia:
 - i primi 24 bit identificano la rete: da `192.168.0.0` a `192.168.255.0`
