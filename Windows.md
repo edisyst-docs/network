@@ -9,8 +9,9 @@ pathping google.it # misura la latenza dal mio router per esempio
 nslookup www.google.com   # UGUALE A LINUX: interroga i server DNS, mi dà info sulla destinazione
 route  # visualizza la tabella di instradamento del mio host
 arp -a # stampa la relazione IP-MAC_ADDRESS di ogni scheda di rete. Opera a livello di MAC ADDRESS (liv.2)
+arp -d # pulisce la tabella ARP (per testare se cambio la config)
  
-tracert google.it # mostra  tutti i salti del pacchetto per arrivare all'host remoto
+tracert -d google.it # mostra  tutti i salti del pacchetto per arrivare all'host remoto
 
 net user # elenco utenti
 net user Edoardo # dettagli utente
