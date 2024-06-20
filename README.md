@@ -39,27 +39,31 @@ passwd # per cambiare la propria password
 sudo useradd nick
 
 curl https://official-joke-api.appspot.com/jokes/random > risultatocurl.html
-curl -o risultatocurl.html https://official-joke-api.appspot.com/jokes/ten # stessa cosa, stampa su un output
-curl -I https://www.google.com # Mi dà i metadati
-curl -X POST https://www.techwithtim.net/ # il metodo di default è GET
-curl -X POST --data "q=cane&par2=val2" https://www.google.com/search # posso passargli dei parametri in POST
+curl -o risultatocurl.html https://official-joke-api.appspot.com/jokes/ten # UGUALE, salva su un output
+curl -I https://www.google.com                              # Recupera i metadati della risposta
+curl -H "Content-Type: application/json" http://example.com # aggiungo un'intestazione HTTP alla richiesta
+curl -X POST https://www.techwithtim.net/                   # il metodo di default è GET
+curl -X POST -d "par1=cane&par2=val2" https://www.google.com/search # posso passargli dei parametri in POST
+curl -X POST -H "Content-Type: application/json" -d '{"key1":"value1", "key2":"value2"}' http://example.com/resource # gli passo dei dati in JSON
+curl -u username:password http://example.com            # effettua una richiesta con autenticazione di base
+curl -F "file=@/path/to/file" http://example.com/upload # carico un file su un server
+curl -c cookies.txt http://example.com                  # salvo i cookie in un file
+curl -b cookies.txt http://example.com                  # invio i cookie salvati in un file
 
-sudo ufw allow 80
-sudo ufw status
-sudo ufw enable
+ufw allow 80   # abilita il traffico verso una porta (deny lo nega)
+ufw allow http # UGUALE, perchè il traffico HTTP avviene nella porta 80
+ufw status     # stato del firewall
+ufw enable     # attiva il firewall (disable lo disabilita)
+ufw limit 22   # limita il traffico sulla 22 (SSH): per prevenire attacchi brute force
+
+ufw default deny incoming  # nega tutto il traffico in entrata
+ufw default allow outgoing # permette tutto il traffico in uscita
+
+ufw allow from 192.168.1.100 to any port 22 # permette il traffico da un IP specifico alla porta 22
+ufw allow in on eth0 to any port 80 # permette il traffico sulla porta 80 solo attraverso l'interfaccia eth0
+ufw allow 5000:6000/tcp # permette il traffico su un range di porte
 
 service start/stop/status docker # avvia/stoppa il servizio docker (per esempio)
-```
-
-# SSH
-```bash
-sudo systemctl status ssh.service # nella macchina host dovrei verificare che SSH sia attivo
-
-ssh-keygen -b 4096 -C "$(whoami)@$(hostname)" # -C per identificarla con un commento e ci scrivo utente@host
-ssh-copy-id username@ip_macchina # invia la pub_key all'host remoto così ci potremo collegare in SSH
-
-ssh 172.10.20.30 # di default l'utente che accede alla macchina host è lo stesso della macchina client
-ssh username@ip_macchina # di default port=22, sarebbe meglio cambiarla per la sicurezza
 ```
 
 ```bash

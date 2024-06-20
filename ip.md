@@ -1,6 +1,19 @@
 # TRASMISSIONE VIA SSH
 
-### ELENCO FILE
+```bash
+sudo systemctl status ssh.service # nella macchina host dovrei verificare che SSH sia attivo
+
+ssh-keygen -b 4096 -C "$(whoami)@$(hostname)" # -C per identificarla con un commento e ci scrivo utente@host
+ssh-copy-id username@ip_macchina # invia la pub_key all'host remoto così ci potremo collegare in SSH
+
+ssh 172.10.20.30 # di default l'utente che accede alla macchina host è lo stesso della macchina client
+ssh username@ip_macchina       # di default port=22, sarebbe meglio cambiarla per la sicurezza
+ssh -p 2222 alice@192.168.1.10 # così uso la porta 2222
+ssh alice@192.168.1.10 'ls -l /var/www'     # esegue un comando sul server remoto
+ssh -L 8080:localhost:80 alice@192.168.1.10 # inoltra la porta 8080 del mio locale alla 80 del server remoto
+```
+
+### ELENCO FILE SSH
 ```bash
 authorized_keys # contiene tutte le chiavi pubbliche del mio client (tutti gli host a cui può accedere)
 id_rsa # la mia chiave privata
@@ -10,6 +23,7 @@ known_hosts
 
 ### INSERIMENTO MANUALE CHIAVI
 ```bash
+scp file.txt alice@192.168.1.10:/home/alice/ # utilizzo SSH per copiare file dal mio locale al server remoto
 scp .ssh/id_rsa.pub utente@host: # secure copy, copio manualmente la pubkey sull'host. I : finali indicano che andrò nella home folder
 ```
 
@@ -17,8 +31,8 @@ Nell'host dovrò fare:
 ```bash
 mkdir .ssh
 chmod 700 .ssh/
-cat id_rssa.pub >> .ssh/authorized_keys # qui copio tutte le pubkey che verranno usate
-rm /id_rssa.pub
+cat id_rsa.pub >> .ssh/authorized_keys # qui copio tutte le pubkey che verranno usate
+rm /id_rsa.pub
 chmod 600 .ssh/authorized_keys
 cat .ssh/authorized_keys
 exit
@@ -28,9 +42,11 @@ Dal client se cerco di entrae in ssh mi chiede la password della chiave, non que
 ### INSERIMENTO AUTOMATICO CHIAVI
 Dalla macchina host faccio:
 ```bash
-ssh-keygen -t rsa # crea .ssh/is_rsa e .ssh/is_rsa.pub
-ssh-copy-id -i ~/.ssh/id_rsa.pub root@192.168.10.20
+ssh-keygen (-t rsa ) # crea .ssh/id_rsa e .ssh/id_rsa.pub
+ssh-copy-id (-i ~/.ssh/id_rsa.pub) root@192.168.10.20 
 ```
+Quest'ultimo comando copia il mio `.ssh/id_rsa.pub` in `~/.ssh/authorized_keys` dell'host remoto.  
+Da ora in poi sarà permessa l'autenticazione senza password sull'host remoto
 
 
 # COMANDO IP e opzioni
