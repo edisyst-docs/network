@@ -6,11 +6,15 @@ ping 8.8.8.8       # Opera a livello di IP ADDRESS (liv.3)
 ping google.it     # Verifica se un host è attivo
 pathping google.it # misura la latenza dal mio router per esempio
 
-nslookup www.google.com   # UGUALE A LINUX: interroga i server DNS, mi dà info sulla destinazione
-route  # visualizza la tabella di instradamento del mio host
-arp -a # stampa la relazione IP-MAC_ADDRESS di ogni scheda di rete. Opera a livello di MAC ADDRESS (liv.2)
-arp -d # pulisce la tabella ARP (per testare se cambio la config)
- 
+nslookup www.google.com # UGUALE A LINUX: interroga i server DNS, mi dà info sulla destinazione
+route                   # visualizza la tabella di instradamento del mio host
+
+arp -a             # UGUALE A LINUX: stampa la relazione IP-MAC_ADDRESS di ogni interfaccia
+arp -i eth0        # stampa la tabella ARP per un'interfaccia specifica
+arp -d             # pulisce la tabella ARP (per testare se cambio la config)
+arp -d 192.168.1.2 # cancella una specifica entrata ARP
+arp -s 192.168.1.3 00:aa:bb:cc:dd:ee -i eth0 # aggiunge un'entrata ARP statica
+
 tracert -d google.it # mostra  tutti i salti del pacchetto per arrivare all'host remoto
 
 net user # elenco utenti

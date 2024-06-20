@@ -33,6 +33,24 @@ ssh-copy-id -i ~/.ssh/id_rsa.pub root@192.168.10.20
 ```
 
 
+# COMANDO IP e opzioni
+ip [opzione] [oggetto] [comando] [argomenti]
+
+```shell
+ip -4 address # ho solo gli IPv4
+ip address    # UGUALE: gestisce gli indirizzi IP sulle interfacce
+ip link       # Gestisce le interfacce di rete
+ip route      # Gestisce le tabelle di routing
+ip neigh      # Gestisce le tabelle ARP
+ip rule       # Gestisce le regole di routing
+
+ip addr add 192.168.1.10/24 dev eth0 # aggiunge l'IP all'interfaccia eth0
+ip addr del 192.168.1.10/24 dev eth0 # rimuove l'IP dall'interfaccia eth0
+ip route add 192.168.1.0/24 via 192.168.1.1 # aggiunge una rotta alla rete 192.168.1.0/24 attraverso il gateway 192.168.1.1
+```
+
+
+
 # Esercizio IP - Simulazione ping - WSL Linux
 Per simulare la comunicazione tra due o più host con differente IP su un sistema operativo Ubuntu senza usare macchine virtuali, 
 puoi utilizzare dei namespace di rete (network namespaces). 

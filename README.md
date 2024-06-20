@@ -4,6 +4,8 @@ adduser nicola # crea utente nuovo: mi chiederà la sua password più altre info
 # Esiste anche "useradd" ma è più comodo "adduser" 
 adduser --home /home/utente_custom luca  # modifica la home di default di luca (sarebbe stata /home/luca)
 adduser --ingroup amministratori edoardo # crea edoardo già inserito in un gruppo
+
+w # info dettagliate sugli utenti connessi e le attività che stanno svolgendo
 ```
 
 
@@ -21,7 +23,6 @@ ifconfig - (ipconfig) - # eth0 è la mia connessione fisica a internet
 ifconfig eth0 192.168.1.10 netmask 255.255.255.0 # imposto il mio IP e netmask sulla mia eth0
 ifconfig eth0 down / up # per buttare giù o ritirare su l'interfaccia eth0
 
-ip address - ip -4 address # ho solo gli IPv4 
 ipconfig /all        # mostra tutte le interfacce, anche quelle spente
 ifconfig /displaydns # mostra la cache dei DNS memorizzata attualmente sul sistema
 ifconfig /flushdns   # cancella la cache dei DNS, da fare per prevenire attacchi cache-poisoning
@@ -72,15 +73,40 @@ resolvectl status # IP pubblico
 
 ```bash
 traceroute www.google.com # traccia il percorso che fa un pacchetto x giungere alla destinazione
+
 dig www.google.com        # interroga i server DNS, mi dà il tempo di attesa x giungere alla destinazione
-nslookup www.google.com   # interroga i server DNS, mi dà info sulla destinazione
+dig www.google.com +short # risolve il DNS e basta
+dig www.google.com +trace # mostra ogni passaggio del processo di risoluzione DNS
+dig @8.8.8.8 example.com  # usa il server DNS di Google (8.8.8.8) per eseguire la query per example.com
+dig www.google.com +noall +answer # mostra solo la risposta della query
+
+nslookup                # interroga i server DNS e dà info sui nomi di dominio o indirizzi IP della destinazione
+> server 8.8.8.8        # Cambia il server DNS
+> set type=MX           # Cambia il tipo di query (ad esempio, A, MX, NS)
+> example.com
+> exit
+
+nslookup www.google.com # restituisce l'IP di www.google.com
+nslookup 8.8.8.8        # restituisce il nome di dominio associato: dns.google in questo esempio
+nslookup example.com 8.8.8.8         # utilizza il server DNS 8.8.8.8 per eseguire la query per example.com
+nslookup -server=8.8.8.8 example.com # UGUALE
+nslookup -query=MX example.com       # cerca i record MX per example.com
+
 ```
 
 ```bash
 netstat        # stato di tutte le porte TCP e UDP.
+netstat -l     # mostra solo le porte in ascolto
 netstat -r     # stato di tutte le interfacce di rete attive
+netstat -i     # statistiche delle interfacce di rete
+netstat -s     # statistiche dei vari protocolli
 netstat -tulpn # esistono tante opzioni, son da provare
 netstat -b 5   # in 127.0.0.1:64038 c'è il PID=64038 per identificarlo se voglio killarlo
+route          # VISUALIZZA/MODIFICA LA TABELLA DI ROUTING: stesso output di netstat -r
+
+route add -net 192.168.1.0 netmask 255.255.255.0 gw 192.168.1.1 # aggiungere una rotta statica
+route add default gw 192.168.1.1 # settare il default gateway
+route del -net 192.168.1.0 netmask 255.255.255.0 gw 192.168.1.1 # eliminare la rotta alla rete 192.168.1.0/24 attraverso il GW 192.168.1.1
 ss -tulpn
 ```
 
