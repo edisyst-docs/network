@@ -19,10 +19,13 @@ La scrittura `192.168.1.10/23` equivale a dire: `IP=192.168.1.10` e `netmask=255
 - gli ultimi 9 bit identificano l'host
 
 ```bash
-ifconfig - (ipconfig) - # eth0 è la mia connessione fisica a internet 
-ifconfig eth0 192.168.1.10 netmask 255.255.255.0 # imposto il mio IP e netmask sulla mia eth0
-ifconfig eth0 down / up # per buttare giù o ritirare su l'interfaccia eth0
+ifconfig -a                                      # mostra tutte le interfacc, anche quelle spente 
+ifconfig eth0 192.168.1.10 netmask 255.255.255.0 # imposto il mio IP statico e netmask sulla mia eth0
+ifconfig eth0 hw ether 00:1A:2B:3C:4D:5E         # posso modificare anche il MAC address della mia interfaccia
+ifconfig eth0 broadcast 192.168.1.255            # configuro un indirizzo IP di broadcast
+ifconfig wlan0 down / up                          # per (dis)abilitare l'interfaccia (wireless x esempio) wlan0
 
+ip address - ip -4 address # ho solo gli IPv4 
 ipconfig /all        # mostra tutte le interfacce, anche quelle spente
 ifconfig /displaydns # mostra la cache dei DNS memorizzata attualmente sul sistema
 ifconfig /flushdns   # cancella la cache dei DNS, da fare per prevenire attacchi cache-poisoning
@@ -64,6 +67,17 @@ ufw allow in on eth0 to any port 80 # permette il traffico sulla porta 80 solo a
 ufw allow 5000:6000/tcp # permette il traffico su un range di porte
 
 service start/stop/status docker # avvia/stoppa il servizio docker (per esempio)
+```
+
+# SSH
+```bash
+sudo systemctl status ssh.service # nella macchina host dovrei verificare che SSH sia attivo
+
+ssh-keygen -b 4096 -C "$(whoami)@$(hostname)" # -C per identificarla con un commento e ci scrivo utente@host
+ssh-copy-id username@ip_macchina # invia la pub_key all'host remoto così ci potremo collegare in SSH
+
+ssh 172.10.20.30 # di default l'utente che accede alla macchina host è lo stesso della macchina client
+ssh username@ip_macchina # di default port=22, sarebbe meglio cambiarla per la sicurezza
 ```
 
 ```bash
