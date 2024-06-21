@@ -52,7 +52,9 @@ curl -u username:password http://example.com            # effettua una richiesta
 curl -F "file=@/path/to/file" http://example.com/upload # carico un file su un server
 curl -c cookies.txt http://example.com                  # salvo i cookie in un file
 curl -b cookies.txt http://example.com                  # invio i cookie salvati in un file
+```
 
+```bash
 ufw allow 80   # abilita il traffico verso una porta (deny lo nega)
 ufw allow http # UGUALE, perchè il traffico HTTP avviene nella porta 80
 ufw status     # stato del firewall
@@ -69,22 +71,8 @@ ufw allow 5000:6000/tcp # permette il traffico su un range di porte
 service start/stop/status docker # avvia/stoppa il servizio docker (per esempio)
 ```
 
-# SSH
-```bash
-sudo systemctl status ssh.service # nella macchina host dovrei verificare che SSH sia attivo
-
-ssh-keygen -b 4096 -C "$(whoami)@$(hostname)" # -C per identificarla con un commento e ci scrivo utente@host
-ssh-copy-id username@ip_macchina # invia la pub_key all'host remoto così ci potremo collegare in SSH
-
-ssh 172.10.20.30 # di default l'utente che accede alla macchina host è lo stesso della macchina client
-ssh username@ip_macchina # di default port=22, sarebbe meglio cambiarla per la sicurezza
-```
-
 ```bash
 cat /etc/resolv.conf # elenco dei nameserver
-
-netsh # mi dice tutte le opzioni che ha
-netsh wlan show profiles # mostra chi è connesso al Wifi
 
 resolvectl status # IP pubblico
 ```
@@ -130,6 +118,33 @@ ss -tulpn
 
 ```bash
 ifup / ifdown eth0 # abilita/disabilita la scheda di rete
+```
+
+
+
+# SISTEMISTICA
+```bash
+systemctl restart    apache2 # Riavvia un servizio
+systemctl stop       nginx   # Stoppa il servizio nginx
+systemctl reload     docker  # Ricarica la config di Docker
+systemctl enable     docker  # Abilita Docker all'avvio 
+systemctl disable    docker  # Disabilita Docker all'avvio 
+systemctl is-enabled docker  # Verifica se Docker è abilitato
+systemctl status     docker  # Mostra lo stato di Docker
+
+systemctl reboot             # riavvia il sistema
+systemctl poweroff           # spegni il sistema
+
+systemctl list-units         # mostra tutti i servizi, socket, mount point (in generale Linux le chiama UNITA')
+systemctl list-units --type=service # mostra solio i service
+systemctl list-units  --failed      # mostra le unità fallite
+
+journalctl           # log di systemd
+journalctl -u docker # log di systemd della sola nunità Docker
+journalctl -b        # log del boot corrente
+
+service nome_servizio comando  # più vecchio di systemctl - fa le stesse cose
+service apache2 restart
 ```
 
 

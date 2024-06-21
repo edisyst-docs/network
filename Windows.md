@@ -6,6 +6,22 @@ ping 8.8.8.8       # Opera a livello di IP ADDRESS (liv.3)
 ping google.it     # Verifica se un host è attivo
 pathping google.it # misura la latenza dal mio router per esempio
 
+netsh                                        # mi dice tutte le opzioni che ha
+netsh wlan show networks                     # mostra  le reti wireless disponibili
+netsh wlan show profiles                     # mostra chi è connesso al Wifi
+netsh wlan show profile name="Edoardo"       # Mostrare un profilo preciso di rete wireless
+netsh interface show interface               # mostra le interfacce di rete
+netsh wlan connect name="NomeRete"           # Connettersi a una rete wireless
+
+netsh interface ip set address name="NomeIntFace" static indirizzoIP subnetMask gateway predefinito
+netsh interface ip set address name="Ethernet" static 192.168.1.10 255.255.255.0 192.168.1.1
+netsh interface ip set address name="Ethernet" source=dhcp # imposta un indirizzo IP dinamico (DHCP)
+
+netsh advfirewall firewall show rule name=all    # Mostra le regole del firewall
+netsh interface ipv4 show route                  # Mostra la tabella di routing
+```
+
+```bash
 nslookup www.google.com # UGUALE A LINUX: interroga i server DNS, mi dà info sulla destinazione
 route                   # visualizza la tabella di instradamento del mio host
 

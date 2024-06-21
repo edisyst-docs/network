@@ -1,5 +1,26 @@
-# TRASMISSIONE VIA SSH
+# TRASMISSIONE VIA SFTP
+Utilizza la crittografia SSH per garantire che i dati trasferiti siano protetti
+```bash
+sftp [opzioni] [utente@]hostname
+sftp utente@example.com
+```
+Una volta connessi, dalla shell di SFTP posso lanciare i classici comandi (ls, cd, mkdir, ecc.)
+```bash
+sftp> get nome_file                  # Scarica file dal server remoto al mio locale
+sftp> get nome_file nome_file_locale # UGUALE rinominandolo in locale 
+sftp> put nome_file                  # Invia un file dal mio locale al server remoto
+sftp> put nome_file nome_file_remoto # UGUALE rinominandolo nel server remoto
 
+sftp> mget *.txt                     # Scarica più file dal remoto al locale (può usare caratteri jolly)
+sftp> mput *.txt                     # Invia più file dal locale al server remoto
+
+sftp> rename vecchio_nome nuovo_nome # Rinomina un file sul server remoto
+sftp> chmod 644 nome_file            # Cambia i permessi di un file sul server remoto
+sftp> quit / exit                    # Esci da SFTP
+```
+
+
+# TRASMISSIONE VIA SSH
 ```bash
 sudo systemctl status ssh.service # nella macchina host dovrei verificare che SSH sia attivo
 
