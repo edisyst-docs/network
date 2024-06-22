@@ -48,10 +48,22 @@ curl -H "Content-Type: application/json" http://example.com # aggiungo un'intest
 curl -X POST https://www.techwithtim.net/                   # il metodo di default è GET
 curl -X POST -d "par1=cane&par2=val2" https://www.google.com/search # posso passargli dei parametri in POST
 curl -X POST -H "Content-Type: application/json" -d '{"key1":"value1", "key2":"value2"}' http://example.com/resource # gli passo dei dati in JSON
-curl -u username:password http://example.com            # effettua una richiesta con autenticazione di base
+curl -u username:password http://example.com            # richiesta con autenticazione di base
 curl -F "file=@/path/to/file" http://example.com/upload # carico un file su un server
 curl -c cookies.txt http://example.com                  # salvo i cookie in un file
 curl -b cookies.txt http://example.com                  # invio i cookie salvati in un file
+
+wget http://example.com/file.zip                                  # scarica un file
+wget -O nuovo_nome.zip http://example.com/file.zip                # scarica un file e lo rinomina
+wget -c http://example.com/file.zip                               # riprende un download interrotto
+wget -b http://example.com/file.zip                               # scarica in background
+wget -r http://example.com/directory                              # scarica una directory intera in modo ricorsivo
+wget -m --convert-links http://example.com                        # Crea un mirror di un sito web
+wget -P /destinazione http://example.com/file.zip                 # specifica una directory di destinazione per il download
+wget -i lista_di_file.txt                                         # scarica file elencati in un file, che contiene un elenco di URL, uno per riga.
+wget --no-check-certificate https://example.com/file.zip          # ignora i certificati SSL non validi (utile per HTTPS)
+wget --user=nome_utente --password=la_password http://example.com/file.zip    # richiesta con autenticazione di base
+
 ```
 
 ```bash
@@ -79,6 +91,7 @@ resolvectl status # IP pubblico
 
 ```bash
 traceroute www.google.com # traccia il percorso che fa un pacchetto x giungere alla destinazione
+tracepath -n google.com   # SIMILE, un po' più semplice
 
 dig www.google.com        # interroga i server DNS, mi dà il tempo di attesa x giungere alla destinazione
 dig www.google.com +short # risolve il DNS e basta
@@ -98,6 +111,8 @@ nslookup example.com 8.8.8.8         # utilizza il server DNS 8.8.8.8 per esegui
 nslookup -server=8.8.8.8 example.com # UGUALE
 nslookup -query=MX example.com       # cerca i record MX per example.com
 
+host google.com             # risolve i nomi di dominio, mi dà l'IP
+host -t ns example.com      # ottiene i record NS di un dominio
 ```
 
 ```bash
