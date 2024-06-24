@@ -90,8 +90,12 @@ resolvectl status # IP pubblico
 ```
 
 ```bash
-traceroute www.google.com # traccia il percorso che fa un pacchetto x giungere alla destinazione
-tracepath -n google.com   # SIMILE, un po' più semplice
+traceroute www.google.com          # traccia il percorso che fa un pacchetto x giungere alla destinazione
+tracepath -n google.com            # SIMILE, un po' più semplice
+mtr www.google.com                 # è come TRACEROUTE + PING insieme: prestazioni della rete in tempo reale
+mtr -r google.com > mtr_report.txt # salvo l'output in un file
+whois google.com                   # tante info di dominio: registrante, DNS, contatti, server, status
+whois 8.8.8.8                      # info dettagliate di rete
 
 dig www.google.com        # interroga i server DNS, mi dà il tempo di attesa x giungere alla destinazione
 dig www.google.com +short # risolve il DNS e basta
@@ -111,8 +115,20 @@ nslookup example.com 8.8.8.8         # utilizza il server DNS 8.8.8.8 per esegui
 nslookup -server=8.8.8.8 example.com # UGUALE
 nslookup -query=MX example.com       # cerca i record MX per example.com
 
-host google.com             # risolve i nomi di dominio, mi dà l'IP
-host -t ns example.com      # ottiene i record NS di un dominio
+host google.com                  # risolve i nomi di dominio, mi dà l'IP
+host -t ns example.com           # ottiene i record NS di un dominio
+
+iftop                            # simile a TOP, ma per monitorare in tempo reale le interfacce di rete
+iftop -i eth0                    # monitora in tempo reale l'interfaccia eth0
+iftop -F 192.168.1.0/24          # visualizza il traffico in entrata e in uscita separatamente
+iftop -t                         # visualizza la larghezza di banda totale
+
+tcpdump -i eth0                  # cattura e visualizza i pacchetti che transitano attraverso un'interfaccia
+tcpdump -i any                   # cattura pacchetti su tutte le interfacce disponibili
+tcpdump -i eth0 -w log.pcap      # salvo i pacchetti in un file per successiva analisi
+tcpdump -r log.pcap              # lettura del file precedentemente salvato
+tcpdump -i eth0 host 192.168.1.1 # filtra solo i pacchetti catturati da o verso un IP specifico
+tcpdump -i eth0 port 80          # filtra solo i pacchettiche utilizzano una porta specifica
 ```
 
 ```bash
