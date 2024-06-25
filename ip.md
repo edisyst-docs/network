@@ -1,8 +1,10 @@
 # TRASMISSIONE VIA SFTP
 Utilizza la crittografia SSH per garantire che i dati trasferiti siano protetti
 ```bash
-sftp [opzioni] [utente@]hostname
-sftp utente@example.com
+sftp [opzioni] [utente@]host[:percorso]
+sftp utente@192.168.1.100
+sftp -P 2222 utente@192.168.1.100 # seleziono nua porta diversa
+
 ```
 Una volta connessi, dalla shell di SFTP posso lanciare i classici comandi (ls, cd, mkdir, ecc.)
 ```bash
