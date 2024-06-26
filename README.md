@@ -34,7 +34,24 @@ ipconfig | grep "Indirizzo IPv4"
 ipconfig | grep IPv4 # in questo caso fa lo stesso
 ifconfig | grep eth0
 
-nmap 192.168.1.0/24 # scanzione e mappatura rete
+
+nmap 192.168.1.0/24     # scansione e mappatura di un'intera rete: per scoprire host e servizi su una rete
+nmap 192.168.0.*        # UGUALE
+nmap -sP 192.168.1.0/24 # scansione ping per vedere quali host sono attivi
+nmap 192.168.1.1-254    # scansione di range di IP: da 1 a 254
+nmap 192.168.0.1,2,3    # scansione di alcuni IP specifici
+nmap 192.168.0.1 192.168.0.2 192.168.0.3 # UGUALE
+nmap 192.168.0.* --exclude 192.168.0.2   # escludo un IP dalla rete da scansionare
+nmap 192.168.0.* --excludefile /file.txt # escludo gli IP indicati nel file
+
+nmap 192.168.1.1                # scansione singolo host: scopre le porte aperte e i servizi in esecuzione su esse
+nmap -oN output.txt 192.168.1.1 # Salva l'output in formato normale
+nmap -oX output.xml 192.168.1.1 # Salva l'output in formato XML
+
+nmap -A 192.168.1.1        # scansione dettagliata che include la rilevazione del SO e la versione
+nmap -p 80,443 192.168.1.1 # scansione delle sole porte 80 e 443
+nmap -p 1-100 192.168.1.1  # scansione di un range di porte: da 1 a 100
+nmap -Pn 192.168.1.1       # scansione silenziosa: non invia pacchetti ping
 ```
 
 ```bash
