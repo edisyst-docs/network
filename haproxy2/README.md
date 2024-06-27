@@ -1,4 +1,4 @@
-# HAProxy - Esempio con un bilanciatore di carico
+# HAProxy - Esempio con bilanciatore di carico e monitoring del server web in real time
 L'idea è di creare un bilanciatore di carico primario (che sarà un servizio Docker simile a HAProxy) e diverse  
 istanze di HAProxy che distribuiranno il traffico a container web backend.
 ```bash
@@ -47,11 +47,33 @@ backend http_back
     server web1 web1:80 check
     server web2 web2:80 check
     server web3 web3:80 check
+
+listen stats
+    bind *:8404
+    stats enable
+    stats uri /stats
+    stats refresh 10s
 ```
-Avvio il container HAProxy con questa config:
+Questa config aggiunge la sezione `listen stats` che abilita l'interfaccia di stato su `http://<haproxy-ip>:8404/stats`
+
+Avvio il container HAProxy con questa nuova config:
 ```bash
-docker run -d --name haproxy --network my_network -p 8080:80 -v .\haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro haproxy:latest
+docker run -d --name haproxy --network my_network -p 8080:80 -p 8404:8404 -v .\haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro haproxy:latest
 ```
+
+### 2.1 Accedere all'Interfaccia di Stato
+Apri un browser e vai all'indirizzo http://localhost:8404/stats
+
+Vedrai una pagina web con informazioni sui server web che HAProxy sta utilizzando in tempo reale
+
+### 2.2 Monitorare da Console
+Puoi anche accedere alle informazioni di stato da dentro il container HAProxy col comando `curl`:
+```bash
+docker exec -it haproxy /bin/sh
+curl http://localhost:8404/stats
+```
+Questo comando restituirà l'output HTML che puoi leggere per vedere quale server web è attualmente in uso.
+
 
 
 ## 3. Configurare il Bilanciatore di Carico Primario
