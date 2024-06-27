@@ -25,7 +25,7 @@ docker run -d --name web3 --network my_network -p 8083:80 nginx
 
 
 ## 2. Configurare e Avviare HAProxy
-Creo il file di config per HAProxy `haproxy.cfg`: definirà come HAProxy bilancerà il carico tra i container web1,2,3
+Dobbiamo modificare il file di configurazione di HAProxy `haproxy.cfg` per abilitare l'interfaccia di stato
 ```bash
 global
     log stdout format raw local0
@@ -74,6 +74,9 @@ curl http://localhost:8404/stats
 ```
 Questo comando restituirà l'output HTML che puoi leggere per vedere quale server web è attualmente in uso.
 
+Questa configurazione ti permette di monitorare in tempo reale quale dei server web (web1, web2, web3) viene utilizzato da HAProxy.  
+L'interfaccia di stato fornisce una visualizzazione web dettagliata e aggiornata periodicamente delle prestazioni e  
+dello stato dei server back-end, utile per scopi didattici e di debug.
 
 
 ## 3. Configurare il Bilanciatore di Carico Primario

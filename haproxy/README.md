@@ -1,5 +1,5 @@
 # HAProxy - Esempio con un bilanciatore di carico
-L'idea è di creare un bilanciatore di carico primario (che sarà un servizio Docker simile a HAProxy) e diverse  
+L'idea è creare un bilanciatore di carico primario (che sarà un servizio Docker simile a HAProxy) e diverse  
 istanze di HAProxy che distribuiranno il traffico a container web backend.
 ```bash
 Client ----> Bilanciatore Primario ----> HAProxy ----> Server Applicativi
@@ -15,7 +15,7 @@ Questa config fornisce un esempio pratico di come i bilanciatori di carico posso
 
 
 ## 1. Creare una rete Docker con 3 Container Web Backend
-Creo 3 container Nginx web1,2,3 che rispondano con un semplice messaggio.
+Creo 3 container Nginx `web1, web2, web3` che rispondano con un semplice messaggio
 ```bash
 docker network create my_network
 docker run -d --name web1 --network my_network -p 8081:80 nginx
@@ -25,7 +25,7 @@ docker run -d --name web3 --network my_network -p 8083:80 nginx
 
 
 ## 2. Configurare e Avviare HAProxy
-Creo il file di config per HAProxy `haproxy.cfg`: definirà come HAProxy bilancerà il carico tra i container web1,2,3
+Creo il file di config per HAProxy `haproxy.cfg`: definisce come HAProxy bilancia il carico tra i container web1,2,3
 ```bash
 global
     log stdout format raw local0
@@ -48,15 +48,15 @@ backend http_back
     server web2 web2:80 check
     server web3 web3:80 check
 ```
-Avvio il container HAProxy con questa config:
+Creo il container HAProxy con `haproxy.cfg` come config (questa scrittura funge da Windows):
 ```bash
 docker run -d --name haproxy --network my_network -p 8080:80 -v .\haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro haproxy:latest
 ```
 
 
-## 3. Configurare il Bilanciatore di Carico Primario
-Uso un altro HAProxy come bilanciatore di carico primario che distribuisce il traffico tra le istanze di HAProxy secondarie. 
-Creo un altro file di config per il bilanciatore primario: `haproxy_primary.cfg`
+## 3. Configurare e Avviare il Bilanciatore di Carico Primario
+Uso un altro HAProxy come bilanciatore di carico primario per distribuire il traffico tra le istanze di HAProxy secondarie.  
+Creo un altro `haproxy_primary.cfg` di config (molto simile al precedente) per il bilanciatore HAProxy primario
 ```bash
 global
     log stdout format raw local0
@@ -77,14 +77,13 @@ backend http_back
     balance roundrobin
     server haproxy1 haproxy:80 check
 ```
-Avvio il container HAProxy_primario con questa config:
+Avvio il container HAProxy_primario con `haproxy_primary.cfg` come config:
 ```bash
 docker run -d --name haproxy_primary --network my_network -p 80:80 -v .\haproxy_primary.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro haproxy:latest
 ```
 
 
 ## 4. Verifica dell'Infrastruttura
-Apro il browser all'indirizzo http://localhost:80. Si vede la home di Nginx. 
-Ogni volta che ricarico la pagina, HAProxy bilancia il carico tra i diversi server web1,2,3
-
+Apro il browser all'indirizzo http://localhost:80. Si vede la home di Nginx.  
+Ogni volta che ricarico la pagina, HAProxy bilancia il carico tra i diversi server `web1, web2, web3`
 
