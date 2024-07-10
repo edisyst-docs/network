@@ -66,21 +66,43 @@ ln -s /etc/nginx/sites-available/mio_sito  /etc/nginx/sites-enabled/  # Abilita 
 nginx -t                                                              # controlla la config per errori
 systemctl reload nginx
 
-sudo rm /etc/nginx/sites-enabled/mio_sito   # Disabilita un sito = rimuove il collegamento simbolico
+rm /etc/nginx/sites-enabled/mio_sito   # Disabilita un sito = rimuove il collegamento simbolico
 ```
 I moduli di Nginx li installo con `apt install nome_modulo` e li devo aggiungere a mano sul file di config
 ```bash
 nano /etc/nginx/nginx.conf                           # modifico a mano la config
 load_module modules/ngx_http_image_filter_module.so; # aggiungo questa riga x aggiungere il modulo
 nginx -t                                             # verifico la config di Nginx
-sudo systemctl reload nginx                          # ricarico Nginx per applicare le modifiche
+systemctl reload nginx                               # ricarico Nginx per applicare le modifiche
 
 nano /etc/nginx/nginx.conf
 load_module modules/ngx_http_image_filter_module.so; # commento/elimino questa riga x eliminare il modulo
 nginx -t                                             # verifico la config di Nginx
-sudo systemctl reload nginx                          # ricarico Nginx per applicare le modifiche
+systemctl reload nginx                               # ricarico Nginx per applicare le modifiche
 ```
 
+###  ESEMPIO. Creare un nuovo sito
+```bash
+nano /etc/nginx/sites-available/mio_sito             # creo il nuovo file di config
+```
+Aggiungo nel file `/etc/nginx/sites-available/mio_sito` una config di esempio
+```bash
+server {
+    listen 80;
+    server_name mio_sito.com;
+    root /var/www/mio_sito;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
+```
+Creo il simlink per abilitare il sito e ricarico nginx
+```bash
+ln -s /etc/nginx/sites-available/mio_sito /etc/nginx/sites-enabled/
+systemctl reload nginx
+```
 
 
 
