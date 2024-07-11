@@ -95,7 +95,7 @@ networks:
 ```
 
 # RIFARE
-Avvio il container NGINX con `nginx.conf` come config (questa scrittura funge da Windows):
+Avvio il container Traefik con `docker-compose.yml` come config (questa scrittura funge da Windows):
 ```bash
 docker run -d --name nginx --network my_network -p 80:80 -v .\Caddyfile:/etc/nginx/Caddyfile:ro nginx:latest
 NONONONO docker run -d --name envoy --network my_network -p 80:80 -v .\envoy.yaml:/etc/envoy/envoy.yaml:ro envoyproxy/envoy:v1.16.0
