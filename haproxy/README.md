@@ -77,7 +77,7 @@ backend http_back
     balance roundrobin
     server haproxy1 haproxy:80 check
 ```
-Avvio il container HAProxy_primario con `haproxy_primary.cfg` come config:
+Avvio il container HAProxy_primario con `haproxy_primary.cfg` come config (questa scrittura funge da Windows):
 ```bash
 docker run -d --name haproxy_primary --network my_network -p 80:80 -v .\haproxy_primary.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro haproxy:latest
 ```

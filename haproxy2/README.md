@@ -15,7 +15,7 @@ Questa config fornisce un esempio pratico di come i bilanciatori di carico posso
 
 
 ## 1. Creare una rete Docker con 3 Container Web Backend
-Creo 3 container Nginx web1,2,3 che rispondano con un semplice messaggio.
+Creo sempre 3 container Nginx `web1, web2, web3`
 ```bash
 docker network create my_network
 docker run -d --name web1 --network my_network -p 8081:80 nginx
@@ -56,7 +56,7 @@ listen stats
 ```
 Questa config aggiunge la sezione `listen stats` che abilita l'interfaccia di stato su `http://<haproxy-ip>:8404/stats`
 
-Avvio il container HAProxy con questa nuova config:
+Avvio il container HAProxy con questa nuova config (questa scrittura funge da Windows):
 ```bash
 docker run -d --name haproxy --network my_network -p 8080:80 -p 8404:8404 -v .\haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro haproxy:latest
 ```
@@ -102,7 +102,7 @@ backend http_back
     balance roundrobin
     server haproxy1 haproxy:80 check
 ```
-Avvio il container HAProxy_primario con questa config:
+Avvio il container HAProxy_primario con questa config (questa scrittura funge da Windows):
 ```bash
 docker run -d --name haproxy_primary --network my_network -p 80:80 -v .\haproxy_primary.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro haproxy:latest
 ```

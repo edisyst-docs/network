@@ -33,7 +33,7 @@ systemctl restart apache2
 
 # NGINX
 ```bash
-nginx -c /path/nginx.conf  # usa un file di config alternativo
+nginx -c /path/Caddyfile  # usa un file di config alternativo
 
 nginx -s reload       # Ricarica la config di Nginx 
 nginx -s stop         # Stoppa Nginx
@@ -70,12 +70,12 @@ rm /etc/nginx/sites-enabled/mio_sito   # Disabilita un sito = rimuove il collega
 ```
 I moduli di Nginx li installo con `apt install nome_modulo` e li devo aggiungere a mano sul file di config
 ```bash
-nano /etc/nginx/nginx.conf                           # modifico a mano la config
+nano /etc/nginx/Caddyfile                           # modifico a mano la config
 load_module modules/ngx_http_image_filter_module.so; # aggiungo questa riga x aggiungere il modulo
 nginx -t                                             # verifico la config di Nginx
 systemctl reload nginx                               # ricarico Nginx per applicare le modifiche
 
-nano /etc/nginx/nginx.conf
+nano /etc/nginx/Caddyfile
 load_module modules/ngx_http_image_filter_module.so; # commento/elimino questa riga x eliminare il modulo
 nginx -t                                             # verifico la config di Nginx
 systemctl reload nginx                               # ricarico Nginx per applicare le modifiche
