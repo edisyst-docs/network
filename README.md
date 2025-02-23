@@ -38,6 +38,7 @@ ifconfig | grep eth0
 nmap 192.168.1.0/24     # scansione e mappatura di un'intera rete: per scoprire host e servizi su una rete
 nmap 192.168.0.*        # UGUALE
 nmap -sP 192.168.1.0/24 # scansione ping per vedere quali host sono attivi
+nmap -sn 192.168.1.0/24 # UGUALE forse: mi vede anche il RingIntercom
 nmap 192.168.1.1-254    # scansione di range di IP: da 1 a 254
 nmap 192.168.0.1,2,3    # scansione di alcuni IP specifici
 nmap 192.168.0.1 192.168.0.2 192.168.0.3 # UGUALE
@@ -242,6 +243,3 @@ cat file-cifrato.txt.gpg # illeggibile
 gpg /tmp/file-cifrato.txt.gpg # decifro il file, crea il file decifrato
 cat file-cifrato.txt # leggibile
 ```
-
-
-
