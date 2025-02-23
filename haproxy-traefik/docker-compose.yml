@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+    traefik:
+        image: traefik:v2.4
+        command:
+            - "--api.insecure=true"
+            - "--providers.docker=true"
+            - "--entrypoints.web.address=:80"
+        ports:
+            - "80:80"
+            - "8080:8080"
+        networks:
+            - my_network
+        volumes:
+            - "/var/run/docker.sock:/var/run/docker.sock:ro"
+
+    haproxy:
+        image: haproxy:latest
+        volumes:
+            - /path/to/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+        networks:
+            - my_network
+        ports:
+            - "8080:80"
+            - "8404:8404"
+
+networks:
+    my_network:
+        external: true
