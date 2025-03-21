@@ -192,8 +192,10 @@ journalctl           # log di systemd
 journalctl -u docker # log di systemd della sola nunità Docker
 journalctl -b        # log del boot corrente
 
+service nome_servizio          # mostra i comandi disponibili per quel servizio
+service --status-all           # mostra tutti i service disponibili, attivi e non
 service nome_servizio comando  # più vecchio di systemctl - fa le stesse cose
-service apache2 restart
+service apache2 restart        # ESEMPIO
 ```
 
 

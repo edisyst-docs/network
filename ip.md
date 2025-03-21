@@ -27,16 +27,18 @@ sftp> quit / exit                    # Esci da SFTP
 sudo systemctl status ssh.service # nella macchina host dovrei verificare che SSH sia attivo
 
 ssh-keygen -b 4096 -C "$(whoami)@$(hostname)" # -C per identificarla con un commento e ci scrivo utente@host
+ssh-keygen -t ed25519            # posso specificare il type di chiave
 ssh-copy-id username@ip_macchina # invia la pub_key all'host remoto così ci potremo collegare in SSH
+ssh-copy-id -i ~/.ssh/id_rsa.pub ip_macchina # UGUALE IN TEORIA
 
 ssh 172.10.20.30 # di default l'utente che accede alla macchina host è lo stesso della macchina client
-ssh username@ip_macchina       # di default port=22, sarebbe meglio cambiarla per la sicurezza
+ssh username@172.10.20.30      # di default port=22, sarebbe meglio cambiarla per la sicurezza
 ssh -p 2222 alice@192.168.1.10 # così uso la porta 2222
 ssh alice@192.168.1.10 'ls -l /var/www'     # esegue un comando sul server remoto
 ssh -L 8080:localhost:80 alice@192.168.1.10 # inoltra la porta 8080 del mio locale alla 80 del server remoto
 ```
 
-### ELENCO FILE SSH
+### ELENCO FILE DENTRO ~/.ssh
 ```bash
 authorized_keys # contiene tutte le chiavi pubbliche del mio client (tutti gli host a cui può accedere)
 id_rsa # la mia chiave privata
