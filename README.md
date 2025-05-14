@@ -262,7 +262,8 @@ Settare:
 - sudo systemctl restart sshd
 ```
 
-### 2. Con Puttygen 
+### 2. Puttygen 
+Scaricare Puttygen (non si installa, è un eseguibile)
 CONVERTIRE la chiave privata `ssh-key.key` di Linux in `ssh-key.ppk` per Putty
 
 ### 3. WINSCP > Nuova connessione
@@ -278,3 +279,4 @@ Autenticazione a chiave privata:
   * File Chiave Privata: seleziono il file .ppk generato con Puttygen (ssh-key.ppk).
 * Clicca su Avanzate > Ambiente > SFTP
   * Server SFTP: sudo /usr/lib/openssh/sftp-server
+
