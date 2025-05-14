@@ -245,3 +245,36 @@ cat file-cifrato.txt.gpg # illeggibile
 gpg /tmp/file-cifrato.txt.gpg # decifro il file, crea il file decifrato
 cat file-cifrato.txt # leggibile
 ```
+
+
+# WINSCP - IMPOSTARLO PER ENTRARE COME ROOT
+
+Dapprima devo essermi creato le chiavi SSH nel server remoto e devo salvarle in locale
+
+### 1. Dentro il server
+```bash
+sudo nano /etc/ssh/sshd_config
+```
+Settare:
+- PubkeyAuthentication yes   # Abilito la chiave SSH per l'accesso
+- PasswordAuthentication no  # Se vuoi solo chiave, no password
+```bash
+- sudo systemctl restart sshd
+```
+
+### 2. Con Puttygen 
+CONVERTIRE la chiave privata `ssh-key.key` di Linux in `ssh-key.ppk` per Putty
+
+### 3. WINSCP > Nuova connessione
+Posso chiamarla: ubuntu@edisyst.ddns.net
+* File protocol: SFTP
+* Host name: edisyst.ddns.net
+* Port number: 22 (default per SSH)
+* User name: ubuntu
+* Password: VUOTA
+
+Autenticazione a chiave privata:
+* Clicca su Avanzate > SSH > Autenticazione
+  * File Chiave Privata: seleziono il file .ppk generato con Puttygen (ssh-key.ppk).
+* Clicca su Avanzate > Ambiente > SFTP
+  * Server SFTP: sudo /usr/lib/openssh/sftp-server
